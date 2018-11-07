@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/king-jam/gossdp"
+	"github.com/fromkeith/gossdp"
 	"github.com/spf13/cobra"
 )
 

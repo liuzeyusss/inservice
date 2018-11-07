@@ -2,11 +2,7 @@ package main
 
 import (
 	"log"
-	"os"
-	"path/filepath"
-
 	"github.com/RackHD/inservice/agent"
-	"github.com/spf13/viper"
 )
 
 var binaryName, buildDate, buildUser, commitHash, goVersion, osArch, releaseVersion string
@@ -20,29 +16,16 @@ func main() {
 	log.Println("  Go version: " + goVersion)
 	log.Println("  OS/Arch: " + osArch)
 
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
-	if err != nil {
-		log.Fatalf("InService LLDP Configuration Error: %s\n", err)
-	}
+	/*ins, _ := net.Interfaces()
+	for _, v := range ins {
+		fmt.Println(v.Name)
+	}*/
 
-	viper.SetConfigName("inservice")
-	viper.SetConfigType("json")
-	viper.AddConfigPath("/etc/inservice.d")
-	viper.AddConfigPath(dir)
-	viper.AddConfigPath("$GOPATH/bin")
-	viper.AddConfigPath("$HOME")
-
-	err = viper.ReadInConfig()
-	if err != nil {
-		log.Fatalf("InService LLDP Configuration Error: %s\n", err)
-	}
-
-	log.Printf("InService LLDP Configuration: %s\n", viper.ConfigFileUsed())
-
+	interfaces := []string{"vEthernet (wifi桥出来的网卡)"}
 	lldp, err := NewLLDPPlugin(
-		viper.GetString("agent.http.address"),
-		viper.GetInt("plugins.inservice-lldp.port"),
-		viper.GetStringSlice("plugins.inservice-lldp.interfaces"),
+		"127.0.0.1",
+		80,
+		interfaces,
 	)
 	if err != nil {
 		log.Fatalf("Unable to initialize Plugin: %s\n", err)

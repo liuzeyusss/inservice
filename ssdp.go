@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/king-jam/gossdp"
+	"github.com/fromkeith/gossdp"
 )
 
 // SSDPServer provides SSDP advertisment for the InService Agent and it's plugins.
